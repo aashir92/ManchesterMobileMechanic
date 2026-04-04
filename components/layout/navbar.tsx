@@ -24,7 +24,7 @@ export function Navbar({
 }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [logoSrc, setLogoSrc] = useState("/brand/logo.png");
+  const [logoSrc, setLogoSrc] = useState("/brand/Logo.png");
   const pathname = usePathname();
   const isHome = pathname === "/";
   const solid = !isHome || scrolled || open;

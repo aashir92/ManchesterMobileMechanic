@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 export function Footer({ contact }: { contact: ContactBlockPublic }) {
-  const [logoSrc, setLogoSrc] = useState("/brand/logo.png");
+  const [logoSrc, setLogoSrc] = useState("/brand/Logo.png");
 
   return (
     <footer className="border-t border-[#e1e3e4] bg-white py-12">
