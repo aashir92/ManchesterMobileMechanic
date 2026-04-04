@@ -360,7 +360,7 @@ export function HeroSection({
         aria-hidden
       />
 
-      <div className="relative z-20 mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 pb-10 pt-3 md:pt-4">
+      <div className="relative z-20 mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 pb-24 pt-3 max-md:justify-start md:pb-10 md:pt-4">
         <div
           className={`relative max-w-2xl shrink-0 ${editorSite ? "pointer-events-auto" : ""}`}
         >
@@ -393,13 +393,14 @@ export function HeroSection({
             </>
           )}
         </div>
-        <div className="min-h-6 flex-1" aria-hidden />
+        {/* flex-1 spacer only on md+ so mobile CTAs stay under copy, not pinned to bottom */}
+        <div className="hidden min-h-6 md:block md:flex-1" aria-hidden />
         <motion.div
           custom={2}
           variants={textReveal}
           initial="hidden"
           animate="visible"
-          className="-mt-6 max-w-2xl shrink-0 flex flex-col gap-3 pb-4 sm:flex-row sm:flex-wrap sm:items-center md:-mt-8 md:pb-6"
+          className="mt-6 max-w-2xl shrink-0 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center md:mt-0 md:-mt-8 md:pb-2"
         >
           <Link
             href={`tel:${telHref}`}
