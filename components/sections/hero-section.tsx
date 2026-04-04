@@ -393,14 +393,17 @@ export function HeroSection({
             </>
           )}
         </div>
-        {/* flex-1 spacer only on md+ so mobile CTAs stay under copy, not pinned to bottom */}
-        <div className="hidden min-h-6 md:block md:flex-1" aria-hidden />
+        {/* Mobile: limited flex spacer pushes CTAs down without filling the screen (stays in first view). md+: full flex-1 */}
+        <div
+          className="mt-6 min-h-6 w-full flex-1 max-h-[min(38vh,11rem)] shrink-0 md:mt-0 md:max-h-none md:min-h-6"
+          aria-hidden
+        />
         <motion.div
           custom={2}
           variants={textReveal}
           initial="hidden"
           animate="visible"
-          className="mt-6 max-w-2xl shrink-0 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center md:mt-0 md:-mt-8 md:pb-2"
+          className="max-w-2xl shrink-0 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center md:-mt-8 md:pb-2"
         >
           <Link
             href={`tel:${telHref}`}
