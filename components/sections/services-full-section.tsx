@@ -8,7 +8,7 @@ import {
 } from "@/components/admin/inline/services-inline-panels";
 import type { ServicesPageContent } from "@/lib/cms/services-schema";
 import { motion } from "framer-motion";
-import { ArrowRight, Wrench, Zap } from "lucide-react";
+import { ArrowRight, CheckCircle2, Wrench, Zap } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -116,12 +116,20 @@ export function ServicesFullSection({
           }
         />
 
-        <div className="relative bg-[#F4F5F7] pb-20 pt-10 md:pb-24 md:pt-14">
+        <div className="relative overflow-hidden bg-gradient-to-b from-[#d8e2ed]/95 via-[#eef2f8] to-[#f4f7fb] pb-20 pt-10 md:pb-24 md:pt-14">
           <div
-            className="pointer-events-none absolute left-1/2 top-0 h-px w-[min(100%,72rem)] -translate-x-1/2 bg-gradient-to-r from-transparent via-[#E6B31E]/50 to-transparent"
+            className="pointer-events-none absolute left-1/2 top-0 h-px w-[min(100%,72rem)] -translate-x-1/2 bg-gradient-to-r from-transparent via-[#E6B31E]/60 to-transparent"
             aria-hidden
           />
-          <div className="relative mx-auto max-w-7xl px-6">
+          <div
+            className="pointer-events-none absolute -left-40 top-24 h-[min(32rem,80vw)] w-[min(32rem,80vw)] rounded-full bg-[#083D6B]/[0.09] blur-3xl"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute -right-32 bottom-[28%] h-[min(26rem,70vw)] w-[min(26rem,70vw)] rounded-full bg-[#E6B31E]/[0.11] blur-3xl"
+            aria-hidden
+          />
+          <div className="relative z-[1] mx-auto max-w-7xl px-6">
             {isAdmin ? (
               <div className="mb-8">
                 <ServicesHomeInline
@@ -132,6 +140,7 @@ export function ServicesFullSection({
                 />
               </div>
             ) : null}
+
             <div className="grid gap-8 lg:grid-cols-12 lg:gap-8 lg:items-stretch xl:gap-10">
               <motion.div
                 className="min-h-[220px] lg:col-span-5 lg:h-full lg:min-h-0"
@@ -140,13 +149,13 @@ export function ServicesFullSection({
                 viewport={{ once: true }}
                 transition={{ duration: 0.45 }}
               >
-                <div className="relative aspect-[4/3] min-h-[220px] w-full overflow-hidden rounded-2xl shadow-[0_24px_48px_-12px_rgba(8,61,107,0.35)] ring-2 ring-[#083D6B]/20 lg:aspect-auto lg:h-full">
+                <div className="group relative aspect-[4/3] min-h-[220px] w-full overflow-hidden rounded-2xl shadow-[0_28px_56px_-14px_rgba(8,61,107,0.4)] ring-2 ring-[#083D6B]/25 lg:aspect-auto lg:h-full">
                   <Image
                     src={home.spotlight_image_url}
                     alt="Mechanic performing engine and oil service in a professional workshop"
                     fill
                     priority
-                    className="object-cover"
+                    className="object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.02]"
                     sizes="(max-width: 1024px) 100vw, 40vw"
                     unoptimized
                   />
@@ -172,27 +181,32 @@ export function ServicesFullSection({
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: 0.05 }}
               >
-                <div className="flex h-full min-h-0 w-full flex-col rounded-2xl border border-[#083D6B]/10 border-l-4 border-l-[#E6B31E] bg-white p-6 shadow-[0_20px_50px_-12px_rgba(8,61,107,0.14)] md:p-8">
-                  <div className="mb-5 flex shrink-0 items-center gap-3">
-                    <div className="rounded-xl bg-[#083D6B] p-2.5 text-white shadow-md">
-                      <Wrench className="h-5 w-5" aria-hidden />
+                <div className="flex h-full min-h-0 w-full flex-col overflow-hidden rounded-2xl border border-[#083D6B]/12 border-l-4 border-l-[#E6B31E] bg-white/95 shadow-[0_24px_56px_-14px_rgba(8,61,107,0.22)] ring-1 ring-[#083D6B]/8 backdrop-blur-sm">
+                  <div className="flex shrink-0 items-center gap-3 bg-gradient-to-r from-[#062f55] to-[#0a4a7a] px-5 py-4 text-white md:px-7 md:py-5">
+                    <div className="rounded-xl bg-[#E6B31E]/25 p-2.5 text-[#E6B31E] ring-1 ring-[#E6B31E]/35">
+                      <Wrench className="h-5 w-5 md:h-6 md:w-6" aria-hidden />
                     </div>
-                    <h3 className="font-[family-name:var(--font-montserrat)] text-xl font-bold text-[#083D6B] md:text-2xl">
+                    <h3 className="font-[family-name:var(--font-montserrat)] text-lg font-bold md:text-2xl">
                       {home.mechanical_card_title}
                     </h3>
                   </div>
-                  <ul className="min-h-0 flex-1 space-y-2.5 text-[#42474f]">
+                  <ul className="space-y-2 px-4 pb-2 pt-4 text-[#42474f] md:space-y-2.5 md:px-6 md:pb-3 md:pt-6">
                     {mechItems.map((item) => (
-                      <li key={item.id} className="flex gap-3">
-                        <span
-                          className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#E6B31E] shadow-sm"
+                      <li
+                        key={item.id}
+                        className="flex gap-3 rounded-xl border border-[#083D6B]/10 bg-gradient-to-br from-white to-[#f4f8fc] px-3 py-2.5 transition-colors hover:border-[#083D6B]/18 hover:bg-[#083D6B]/[0.04] md:px-4 md:py-3"
+                      >
+                        <CheckCircle2
+                          className="mt-0.5 h-5 w-5 shrink-0 text-[#E6B31E]"
                           aria-hidden
                         />
-                        <span className="text-base leading-snug">{item.title}</span>
+                        <span className="text-[15px] font-medium leading-snug md:text-base">
+                          {item.title}
+                        </span>
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-6 shrink-0 border-t border-[#083D6B]/10 pt-5 lg:mt-auto">
+                  <div className="flex shrink-0 flex-wrap gap-2 border-t border-[#083D6B]/10 bg-[#f8fafc]/80 px-4 py-3 md:gap-3 md:px-6 md:py-4">
                     <Link
                       href="/services#mechanical-services"
                       className="inline-flex items-center gap-2 rounded-lg bg-[#083D6B] px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-colors hover:bg-[#062f55]"
@@ -201,26 +215,31 @@ export function ServicesFullSection({
                       <ArrowRight className="h-4 w-4" aria-hidden />
                     </Link>
                   </div>
+                  <div className="min-h-0 flex-1" aria-hidden />
                 </div>
               </motion.div>
             </div>
 
             <motion.div
-              className="relative mt-8 overflow-hidden rounded-2xl border border-[#083D6B]/15 bg-[#083D6B] p-6 text-white shadow-[0_20px_50px_-12px_rgba(8,61,107,0.35)] md:mt-10 md:p-8 lg:mt-4"
+              className="relative mt-8 overflow-hidden rounded-2xl border border-[#083D6B]/20 bg-[#083D6B] p-6 text-white shadow-[0_24px_56px_-14px_rgba(8,61,107,0.4)] md:mt-10 md:p-8 lg:mt-6"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.45, delay: 0.06 }}
             >
               <div
-                className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_100%_0%,rgba(230,179,30,0.15),transparent)]"
+                className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_100%_0%,rgba(230,179,30,0.18),transparent)]"
+                aria-hidden
+              />
+              <div
+                className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.06)_0%,transparent_45%)]"
                 aria-hidden
               />
               <div className="relative">
                 <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
-                    <div className="rounded-xl bg-[#E6B31E]/25 p-2.5 text-[#E6B31E]">
-                      <Zap className="h-5 w-5" aria-hidden />
+                    <div className="rounded-xl bg-[#E6B31E]/25 p-2.5 text-[#E6B31E] ring-1 ring-[#E6B31E]/35">
+                      <Zap className="h-5 w-5 md:h-6 md:w-6" aria-hidden />
                     </div>
                     <h3 className="font-[family-name:var(--font-montserrat)] text-xl font-bold md:text-2xl">
                       {home.electrical_card_title}
@@ -229,14 +248,17 @@ export function ServicesFullSection({
                 </div>
                 <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                   {elecSummaries.map((group) => (
-                    <li
+                    <motion.li
                       key={group.id}
-                      className="rounded-xl border border-white/15 bg-white/[0.08] px-4 py-3 backdrop-blur-sm"
+                      className="rounded-xl border border-white/20 bg-gradient-to-br from-white/[0.12] to-white/[0.05] px-4 py-3.5 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.25)] ring-1 ring-[#E6B31E]/20 backdrop-blur-sm md:py-4"
+                      initial={false}
+                      whileHover={{ y: -2 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 24 }}
                     >
-                      <span className="block text-sm font-bold leading-snug text-white">
+                      <span className="block text-sm font-bold leading-snug tracking-tight text-white md:text-[15px]">
                         {group.heading}
                       </span>
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
                 <div className="mt-6">

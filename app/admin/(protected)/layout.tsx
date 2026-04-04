@@ -18,6 +18,12 @@ export default function AdminShellLayout({
           <Link href="/" className="text-sm font-semibold text-[#42474f] hover:text-[#083D6B]">
             Edit on site
           </Link>
+          <Link
+            href="/admin/settings"
+            className="text-sm font-semibold text-[#42474f] decoration-[#E6B31E] decoration-2 underline-offset-4 hover:text-[#E6B31E] hover:underline"
+          >
+            Change password
+          </Link>
           <form action={signOut}>
             <button
               type="submit"

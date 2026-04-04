@@ -65,7 +65,7 @@ function HeroCarouselLayer({ images }: { images: string[] }) {
     if (images.length === 0) return;
     const id = window.setInterval(() => {
       setIndex((i) => (i + 1) % images.length);
-    }, 4500);
+    }, 6000);
     return () => window.clearInterval(id);
   }, [images.length]);
 
@@ -393,13 +393,13 @@ export function HeroSection({
             </>
           )}
         </div>
-        <div className="min-h-12 flex-1" aria-hidden />
+        <div className="min-h-6 flex-1" aria-hidden />
         <motion.div
           custom={2}
           variants={textReveal}
           initial="hidden"
           animate="visible"
-          className="max-w-2xl shrink-0 flex flex-col gap-3 pb-6 sm:flex-row sm:flex-wrap sm:items-center md:pb-10"
+          className="-mt-6 max-w-2xl shrink-0 flex flex-col gap-3 pb-4 sm:flex-row sm:flex-wrap sm:items-center md:-mt-8 md:pb-6"
         >
           <Link
             href={`tel:${telHref}`}

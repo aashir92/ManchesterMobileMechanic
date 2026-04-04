@@ -15,6 +15,31 @@ const links = [
   { href: "/contact", label: "Contact" },
 ] as const;
 
+const navLinkUnderline =
+  "underline-offset-[5px] decoration-2 decoration-[#E6B31E] transition-colors duration-200";
+
+function desktopNavLinkClass(href: string, pathname: string, solid: boolean) {
+  const active = pathname === href;
+  if (solid) {
+    if (active) {
+      return `cursor-pointer font-semibold text-[#E6B31E] underline ${navLinkUnderline}`;
+    }
+    return `cursor-pointer font-semibold text-[#083D6B] hover:text-[#E6B31E] hover:underline ${navLinkUnderline}`;
+  }
+  if (active) {
+    return `cursor-pointer text-sm font-semibold uppercase tracking-wider text-[#E6B31E] underline ${navLinkUnderline}`;
+  }
+  return `cursor-pointer text-sm font-semibold uppercase tracking-wider text-white/95 hover:text-[#E6B31E] hover:underline ${navLinkUnderline}`;
+}
+
+function mobileNavLinkClass(href: string, pathname: string) {
+  const active = pathname === href;
+  if (active) {
+    return `cursor-pointer py-1 font-semibold text-[#E6B31E] underline ${navLinkUnderline}`;
+  }
+  return `cursor-pointer py-1 font-semibold text-[#083D6B] hover:text-[#E6B31E] hover:underline ${navLinkUnderline}`;
+}
+
 export function Navbar({
   isAdmin = false,
   contact,
@@ -64,22 +89,12 @@ export function Navbar({
           </span>
         </Link>
 
-        <div
-          className={`hidden items-center gap-6 md:flex ${solid ? "font-semibold text-[#083D6B]" : "text-sm font-semibold uppercase tracking-wider text-white/95"}`}
-        >
+        <div className="hidden items-center gap-6 md:flex">
           {links.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className={`transition-opacity hover:opacity-80 ${solid ? "" : "uppercase"} ${
-                pathname === href
-                  ? solid
-                    ? "text-[#E6B31E]"
-                    : "text-white"
-                  : solid
-                    ? ""
-                    : "hover:text-white"
-              }`}
+              className={desktopNavLinkClass(href, pathname, solid)}
             >
               {label}
             </Link>
@@ -96,14 +111,22 @@ export function Navbar({
             {callLabel}
           </a>
           {isAdmin ? (
-            <span className="flex items-center gap-2 normal-case">
+            <span className="flex flex-wrap items-center gap-2 normal-case">
               <span className="rounded bg-[#E6B31E]/20 px-2 py-1 text-xs font-bold text-[#083D6B]">
                 Editing
               </span>
+              <Link
+                href="/admin/settings"
+                className={`rounded-lg px-3 py-1.5 text-xs font-semibold underline decoration-[#E6B31E] decoration-2 underline-offset-4 transition-colors hover:text-[#E6B31E] ${
+                  solid ? "text-[#083D6B]" : "text-white/95 hover:text-[#E6B31E]"
+                }`}
+              >
+                Change password
+              </Link>
               <form action={signOut}>
                 <button
                   type="submit"
-                  className="rounded-lg border border-[#083D6B]/30 bg-white px-3 py-1.5 text-xs font-semibold text-[#083D6B] hover:bg-[#F4F5F7]"
+                  className="cursor-pointer rounded-lg border border-[#083D6B]/30 bg-white px-3 py-1.5 text-xs font-semibold text-[#083D6B] transition-colors hover:bg-[#F4F5F7]"
                 >
                   Sign out
                 </button>
@@ -114,7 +137,11 @@ export function Navbar({
 
         <button
           type="button"
-          className={`rounded-md p-2 md:hidden ${solid ? "text-[#083D6B]" : "text-white"}`}
+          className={`cursor-pointer rounded-lg p-2 transition-colors duration-200 active:scale-95 md:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+            solid
+              ? "text-[#083D6B] hover:bg-[#083D6B]/10 focus-visible:outline-[#083D6B]"
+              : "text-white hover:bg-white/15 focus-visible:outline-white"
+          }`}
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((v) => !v)}
         >
@@ -126,7 +153,12 @@ export function Navbar({
         <div className="border-t border-black/5 bg-white px-6 py-4 md:hidden">
           <div className="flex flex-col gap-4 font-semibold text-[#083D6B]">
             {links.map(({ href, label }) => (
-              <Link key={href} href={href} onClick={() => setOpen(false)}>
+              <Link
+                key={href}
+                href={href}
+                className={mobileNavLinkClass(href, pathname)}
+                onClick={() => setOpen(false)}
+              >
                 {label}
               </Link>
             ))}
@@ -143,10 +175,17 @@ export function Navbar({
                 <span className="self-start rounded bg-[#E6B31E]/20 px-2 py-1 text-xs font-bold text-[#083D6B]">
                   Editing
                 </span>
+                <Link
+                  href="/admin/settings"
+                  className={`cursor-pointer py-1 text-sm font-semibold hover:text-[#E6B31E] hover:underline ${navLinkUnderline}`}
+                  onClick={() => setOpen(false)}
+                >
+                  Change password
+                </Link>
                 <form action={signOut}>
                   <button
                     type="submit"
-                    className="w-full rounded-lg border border-[#083D6B]/30 bg-[#F4F5F7] py-3 text-sm font-semibold text-[#083D6B] hover:bg-[#E8EAED]"
+                    className="w-full cursor-pointer rounded-lg border border-[#083D6B]/30 bg-[#F4F5F7] py-3 text-sm font-semibold text-[#083D6B] transition-colors hover:bg-[#E8EAED]"
                   >
                     Sign out
                   </button>
