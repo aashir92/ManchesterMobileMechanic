@@ -5,7 +5,7 @@ export function WhatsAppFab({ whatsappUrl }: { whatsappUrl: string }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
-      className="fixed z-50 flex h-[3.75rem] w-[3.75rem] items-center justify-center rounded-full border border-white/35 bg-gradient-to-br from-[#3fdf7f] via-[#25D366] to-[#128C7E] text-white shadow-[0_8px_28px_rgba(37,211,102,0.42),0_2px_8px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.22)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-white/45 hover:shadow-[0_14px_36px_rgba(37,211,102,0.48),0_4px_12px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#128C7E] active:scale-[0.98] motion-reduce:transform-none motion-reduce:hover:translate-y-0"
+      className="fixed z-50 flex h-[3.75rem] w-[3.75rem] animate-pulse items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_10px_36px_-6px_rgba(0,0,0,0.35),0_4px_14px_-2px_rgba(0,0,0,0.18)] transition-transform duration-300 hover:scale-110 hover:shadow-[0_14px_44px_-6px_rgba(0,0,0,0.38),0_6px_18px_-2px_rgba(0,0,0,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 motion-reduce:animate-none motion-reduce:hover:scale-100"
       style={{
         bottom: "max(1.25rem, env(safe-area-inset-bottom, 0px))",
         right: "max(1rem, env(safe-area-inset-right, 0px))",
@@ -13,7 +13,7 @@ export function WhatsAppFab({ whatsappUrl }: { whatsappUrl: string }) {
     >
       {/* Official-style mark: speech bubble + handset (single path), white on green */}
       <svg
-        className="h-10 w-10 shrink-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)]"
+        className="h-10 w-10 shrink-0 drop-shadow-sm"
         viewBox="0 0 24 24"
         aria-hidden
       >

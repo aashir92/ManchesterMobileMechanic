@@ -27,7 +27,7 @@ function validateImage(file: File | null): string | null {
 }
 
 function revalidateCmsPaths() {
-  const paths = ["/", "/about", "/contact", "/services", "/admin"];
+  const paths = ["/", "/about", "/contact", "/services", "/privacy", "/terms", "/admin"];
   for (const p of paths) revalidatePath(p);
 }
 

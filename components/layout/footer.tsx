@@ -33,10 +33,10 @@ export function Footer({ contact }: { contact: ContactBlockPublic }) {
           <Link className="transition-colors hover:text-[#E6B31E]" href="/contact">
             Contact
           </Link>
-          <Link className="transition-colors hover:text-[#E6B31E]" href="#">
+          <Link className="transition-colors hover:text-[#E6B31E]" href="/privacy">
             Privacy Policy
           </Link>
-          <Link className="transition-colors hover:text-[#E6B31E]" href="#">
+          <Link className="transition-colors hover:text-[#E6B31E]" href="/terms">
             Terms of Service
           </Link>
         </nav>
