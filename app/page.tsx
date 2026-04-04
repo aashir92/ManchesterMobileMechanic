@@ -1,65 +1,49 @@
-import Image from "next/image";
+import { PublicShell } from "@/components/layout/public-shell";
+import { CtaSection } from "@/components/sections/cta-section";
+import { HeroSection } from "@/components/sections/hero-section";
+import { ServicesFullSection } from "@/components/sections/services-full-section";
+import { ValueSection } from "@/components/sections/value-section";
+import { getPublicAuth } from "@/lib/auth/public-session";
+import { fetchLandingData } from "@/lib/data/fetch-landing";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const [{ isAdmin }, { publicContent, siteContent }] = await Promise.all([
+    getPublicAuth(),
+    fetchLandingData(),
+  ]);
+  const c = publicContent;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <PublicShell isAdmin={isAdmin} contact={c.contact}>
+      <main className="relative">
+        <HeroSection
+          headline={c.hero_h1}
+          subhead={c.hero_subhead}
+          heroImageUrls={c.hero_image_urls}
+          phoneTel={c.contact.phone_tel}
+          editorSite={isAdmin ? siteContent : null}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+        <ServicesFullSection
+          variant="home"
+          servicesPage={c.services_page}
+          isAdmin={isAdmin}
+        />
+        <ValueSection
+          headline={c.home_value.headline}
+          features={c.home_value.features}
+          vanImageUrl={c.home_value.van_image_url}
+          isAdmin={isAdmin}
+        />
+        <CtaSection
+          headline={c.cta.headline}
+          subtext={c.cta.subtext}
+          callLabel={c.cta.call_label}
+          bookLabel={c.cta.book_label}
+          phoneTel={c.cta.phone_tel}
+        />
       </main>
-    </div>
+    </PublicShell>
   );
 }

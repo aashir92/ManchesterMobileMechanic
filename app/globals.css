@@ -1,26 +1,87 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #191c1d;
+  --primary: #083d6b;
+  --accent: #e6b31e;
+  --surface: #f4f5f7;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: #083d6b;
+  --color-accent: #e6b31e;
+  --color-surface: #f4f5f7;
+  --color-muted: #42474f;
+  --font-sans: var(--font-open-sans);
+  --font-headline: var(--font-montserrat);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-open-sans), system-ui, sans-serif;
+}
+
+.hero-fixed-bg {
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+@media (max-width: 768px) {
+  .hero-fixed-bg {
+    background-attachment: scroll;
+  }
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Hero infinite image strip (scoped — do not target html/body) */
+@keyframes hero-slider-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.hero-slider-mask {
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+.hero-slider-track {
+  animation: hero-slider-scroll 40s linear infinite;
+}
+
+.hero-slider-item {
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
+}
+
+.hero-slider-item:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
 }

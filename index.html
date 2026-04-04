@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Manchester Mobile Mechanic | Professional Vehicle Repairs</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&amp;family=Work+Sans:wght@600;700&amp;family=Open+Sans:wght@400;600;700&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#f4bf2d",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#2e3132",
+                        "on-secondary-fixed": "#251a00",
+                        "on-surface": "#191c1d",
+                        "on-background": "#191c1d",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#4c3900",
+                        "surface-container-low": "#f3f4f5",
+                        "on-primary-fixed-variant": "#1b4877",
+                        "on-tertiary-fixed": "#251a00",
+                        "primary-fixed-dim": "#a1c9ff",
+                        "secondary-fixed-dim": "#f4bf2d",
+                        "tertiary": "#322400",
+                        "surface-tint": "#376090",
+                        "surface-dim": "#d9dadb",
+                        "primary-container": "#083d6b",
+                        "surface-container": "#edeeef",
+                        "primary": "#002749",
+                        "outline-variant": "#c2c6d0",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#f8f9fa",
+                        "on-primary-container": "#81a9dd",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#ffdf98",
+                        "surface-bright": "#f8f9fa",
+                        "secondary-container": "#fdc736",
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e7e8e9",
+                        "tertiary-fixed": "#ffdf98",
+                        "surface-variant": "#e1e3e4",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-secondary-container": "#6f5400",
+                        "on-tertiary-container": "#cf9f00",
+                        "on-error": "#ffffff",
+                        "surface": "#f8f9fa",
+                        "on-primary-fixed": "#001c38",
+                        "on-secondary-fixed-variant": "#5a4300",
+                        "on-surface-variant": "#42474f",
+                        "secondary": "#775a00",
+                        "inverse-primary": "#a1c9ff",
+                        "primary-fixed": "#d3e4ff",
+                        "on-tertiary-fixed-variant": "#5a4300",
+                        "outline": "#737780"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Montserrat", "Work Sans", "sans-serif"],
+                        "body": ["Open Sans", "Inter", "sans-serif"],
+                        "label": ["Open Sans", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Hero Cascading Delays */
+        .hero-title {
+            animation: heroReveal 0.8s ease-out 0.2s forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .hero-subtitle {
+            animation: heroReveal 0.8s ease-out 0.4s forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        @keyframes heroReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
+<nav class="flex items-center justify-between px-6 h-16 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-3">
+<img alt="Manchester Mobile Mechanic Logo" class="h-10 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uinxyCymmhqwpf6jS-92j2U9niGMrWkzUQtPHpwhzPIJ5Z2UJNNzbo6nto0vDDjE6A8mFRCnMHMOrxxYS9NwVkRHAMra0Dzd9P-F0Hc_uJHLjPxJRaRFhG-G6RdbI4lZcRhfF1mZrDRoUUG23mvPbI-TdfrpdapQmtE8aVBjYKP1Lc70A2Vi6t3qhcj2ye3ah_s0HW4r34E30pEiX_tMgjkQ_s3XZBSPQHSNGNDpcJboDA8wvc616zwWX-Y6qLyTFh2fH7OXpeUig"/>
+<span class="text-lg font-bold text-sky-950 tracking-tighter font-headline hidden sm:inline">MANCHESTER MOBILE MECHANIC</span>
+</div>
+<div class="hidden md:flex items-center gap-8 text-sky-900 font-['Work_Sans'] font-bold tracking-tight">
+<a class="hover:opacity-80 transition-opacity" href="#services">Services</a>
+<a class="hover:opacity-80 transition-opacity" href="#about">Why Choose Us</a>
+<a class="bg-secondary-container text-on-secondary-fixed px-5 py-2 rounded-lg flex items-center gap-2 hover:opacity-90 transition-all" href="tel:07845531351">
+<span class="material-symbols-outlined text-[20px]">call</span>
+                    0784 5531351
+                </a>
+</div>
+<button class="md:hidden text-sky-900">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</nav>
+</header>
+<main>
+<!-- Cinematic Hero Section -->
+<section class="relative h-screen flex items-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-transparent z-10"></div>
+<img alt="Real mechanic working on a car engine" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjl787otLsvQxu50h9z8uB5mEeXFzToO3P9QOvsqBv3U4iou53zJVMSBZs-a_RmQlnm6ybcYPstyl8FNWMSHkChsuD7XUQ-ATVazjZD5XqiavH4FQIZkJz701L3qYN-ztqJmzbeTMn2LHub-acQ_QqsWrvU085yDaHxtMI7g6TT8MxoDWYAcnpuW67E14p1Au0MM6hI10vuyf4hi4_E7aPAfisuBbpyfJhkcqVCHjz36ByOtyRY0o6i4lN2Csq6m-HySKvNh84c-E"/>
+</div>
+<div class="container mx-auto px-6 relative z-20">
+<div class="max-w-2xl">
+<h1 class="hero-title text-white font-headline text-5xl md:text-7xl font-bold leading-tight tracking-tight mb-6">
+                        Professional Repairs At Your Doorstep
+                    </h1>
+<p class="hero-subtitle text-on-primary-container text-xl md:text-2xl mb-10 max-w-lg font-body leading-relaxed">
+                        Manchester Mobile Mechanic covering Manchester and Surrounding Areas. Reliable mechanical &amp; auto electrical services.
+                    </p>
+<div class="hero-subtitle flex flex-col sm:flex-row gap-4">
+<a class="inline-flex items-center justify-center px-8 py-4 bg-secondary-container text-on-secondary-fixed font-bold rounded text-lg transition-transform active:scale-95 hover:brightness-105 shadow-xl" href="tel:07845531351">
+                            Call 0784 5531351
+                        </a>
+<button class="glass-card text-white font-bold px-8 py-4 rounded text-lg hover:bg-white/20 transition-all">
+                            Book Appointment
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Services (Bento Box) -->
+<section class="py-24 bg-surface" id="services">
+<div class="container mx-auto px-6">
+<div class="mb-16 reveal">
+<span class="text-secondary font-bold uppercase tracking-widest text-sm mb-2 block">Our Expertise</span>
+<h2 class="text-primary font-headline text-4xl md:text-5xl font-bold">Comprehensive Auto Solutions</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<!-- Interim Service - Featured Large -->
+<div class="md:col-span-2 md:row-span-2 bg-primary-container p-8 rounded-xl text-white flex flex-col justify-between group hover:shadow-2xl transition-all border-l-4 border-secondary-container reveal">
+<div>
+<span class="material-symbols-outlined text-secondary-container text-4xl mb-6">oil_barrel</span>
+<h3 class="text-3xl font-headline font-bold mb-4">Interim service £99</h3>
+<p class="text-on-primary-container text-lg">Full diagnostic check, oil change, and filter replacements. Keeping your engine running with surgical precision.</p>
+</div>
+<div class="mt-8 flex items-center text-secondary-container font-bold gap-2 group-hover:gap-4 transition-all cursor-pointer">
+                            Book Now <span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+<!-- Brakes -->
+<div class="bg-surface-container-lowest p-6 rounded-xl hover:shadow-xl transition-all border border-outline-variant/15 reveal">
+<span class="material-symbols-outlined text-secondary text-3xl mb-4">settings_input_component</span>
+<h4 class="font-headline font-bold text-xl mb-2 text-primary">Brake discs and pads</h4>
+<p class="text-on-surface-variant text-sm">Precision installation using premium quality components.</p>
+</div>
+<!-- Suspension -->
+<div class="bg-surface-container-lowest p-6 rounded-xl hover:shadow-xl transition-all border border-outline-variant/15 reveal">
+<span class="material-symbols-outlined text-secondary text-3xl mb-4">rebase_edit</span>
+<h4 class="font-headline font-bold text-xl mb-2 text-primary">Suspension work</h4>
+<p class="text-on-surface-variant text-sm">Restoring ride quality and handling performance.</p>
+</div>
+<!-- Diagnostic -->
+<div class="md:col-span-2 bg-surface-container-high p-8 rounded-xl flex items-center gap-6 group reveal">
+<div class="bg-primary text-white p-4 rounded-lg">
+<span class="material-symbols-outlined text-3xl">computer</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-2xl text-primary">Advanced Diagnostic</h4>
+<p class="text-on-surface-variant">Full vehicle system scanning and error code reporting.</p>
+</div>
+</div>
+<!-- Electric -->
+<div class="bg-surface-container-lowest p-6 rounded-xl hover:shadow-xl transition-all border border-outline-variant/15 reveal">
+<span class="material-symbols-outlined text-secondary text-3xl mb-4">electric_bolt</span>
+<h4 class="font-headline font-bold text-xl mb-2 text-primary">Electric troubleshooting</h4>
+<p class="text-on-surface-variant text-sm">Tracing complex wiring faults and ECU issues.</p>
+</div>
+<!-- MOT Prep -->
+<div class="bg-surface-container-lowest p-6 rounded-xl hover:shadow-xl transition-all border border-outline-variant/15 reveal">
+<span class="material-symbols-outlined text-secondary text-3xl mb-4">fact_check</span>
+<h4 class="font-headline font-bold text-xl mb-2 text-primary">Mot prep</h4>
+<p class="text-on-surface-variant text-sm">Comprehensive checks before your inspection.</p>
+</div>
+<!-- MOT Failure -->
+<div class="bg-surface-container-lowest p-6 rounded-xl hover:shadow-xl transition-all border border-outline-variant/15 reveal">
+<span class="material-symbols-outlined text-secondary text-3xl mb-4">handyman</span>
+<h4 class="font-headline font-bold text-xl mb-2 text-primary">Mot failure</h4>
+<p class="text-on-surface-variant text-sm">Fast repair turnaround for failed certificates.</p>
+</div>
+<!-- Jump Starts -->
+<div class="bg-surface-container-lowest p-6 rounded-xl hover:shadow-xl transition-all border border-outline-variant/15 reveal">
+<span class="material-symbols-outlined text-secondary text-3xl mb-4">flash_on</span>
+<h4 class="font-headline font-bold text-xl mb-2 text-primary">Jump starts</h4>
+<p class="text-on-surface-variant text-sm">Rapid roadside assistance for dead batteries.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Choose Us -->
+<section class="py-24 bg-primary text-white overflow-hidden relative" id="about">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-16 items-center">
+<div class="reveal">
+<h2 class="font-headline text-4xl md:text-5xl font-bold mb-12">The Mobile Engineering Standard</h2>
+<div class="space-y-8">
+<div class="flex gap-6">
+<div class="bg-secondary-container/20 p-4 rounded h-fit">
+<span class="material-symbols-outlined text-secondary-container">car_repair</span>
+</div>
+<div>
+<h4 class="text-xl font-bold mb-2">Mobile service – we come to you</h4>
+<p class="text-on-primary-container">Forget the towing costs. We repair your vehicle at home, work, or roadside.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="bg-secondary-container/20 p-4 rounded h-fit">
+<span class="material-symbols-outlined text-secondary-container">timer</span>
+</div>
+<div>
+<h4 class="text-xl font-bold mb-2">Fast &amp; reliable</h4>
+<p class="text-on-primary-container">Efficiency without compromising on mechanical integrity.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="bg-secondary-container/20 p-4 rounded h-fit">
+<span class="material-symbols-outlined text-secondary-container">receipt_long</span>
+</div>
+<div>
+<h4 class="text-xl font-bold mb-2">Transparent pricing</h4>
+<p class="text-on-primary-container">No hidden fees. Upfront quotes that stay consistent.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="bg-secondary-container/20 p-4 rounded h-fit">
+<span class="material-symbols-outlined text-secondary-container">workspace_premium</span>
+</div>
+<div>
+<h4 class="text-xl font-bold mb-2">Experienced technician</h4>
+<p class="text-on-primary-container">Specialist knowledge in mechanical and auto electrical engineering.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative reveal">
+<div class="absolute -top-10 -right-10 w-64 h-64 bg-secondary-container/10 rounded-full blur-3xl"></div>
+<img alt="Real professional service van" class="rounded-lg shadow-2xl relative z-10 hover:brightness-105 transition-all duration-500 w-full h-[500px] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7gPN9lhlXN4moaVK_JTx8bovS3mBedWfQH2AtVoD6LHtCMvCTd2UOk9NBipR8MWu6_BhOgFacTvVKFcznCssh_b8Gl_xnhWf_KS9hebcpr2PAH6uZeX_ETMaTuZSHecB_1BMU0UE1pst8FNyhjiepcUb9ArmXuYprCgc8lXWCzLusRxPNQbWAhdhwM-wcfuIlyKZYHVJA5pg7iX7AVkgGwnviVomJqMHHM3jBf7xyja-ZxaCcPMr0-azBqzIH-a4w35uy-BkgDeA"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust & Proof (Comparison) -->
+<section class="py-24 bg-surface-container-low">
+<div class="container mx-auto px-6">
+<div class="text-center mb-16 reveal">
+<h2 class="font-headline text-4xl font-bold text-primary mb-4">Precision Results</h2>
+<p class="text-on-surface-variant max-w-xl mx-auto">See the difference our specialist engineering makes to your vehicle's safety and performance.</p>
+</div>
+<div class="grid md:grid-cols-2 gap-8 items-center">
+<div class="relative aspect-video rounded-xl overflow-hidden group reveal">
+<div class="flex h-full">
+<div class="w-1/2 relative overflow-hidden border-r-2 border-white/50">
+<img alt="Real rusty brake disc" class="h-full w-full object-cover grayscale brightness-75" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpT--Gwzq_yQ5CChMUzD9izchlfdyxYUu9obt-vmvx6kfAlLzpDphAAU_H4L2E9mpdixVm1mr9RXYb0PMSeea2W52XVe8RsvC5a6-ip7feFqQeN1UXcKo9eqPyfVWAxIBtVJ8KpdRyLUUD9foP3ehwIpaQ6Z7XYrWHu2cjnCVhhcUl6sU0XdL019Sg4JM4TGsB1QR8GeWtZkA9jlg941GrIomviufzs4efXLFF4jkzczahFDOaco7fXlwscH2q_dOUfr_wjyA7k_g"/>
+<div class="absolute inset-0 bg-red-900/10"></div>
+<span class="absolute top-4 left-4 bg-black/60 text-white px-3 py-1 text-xs font-bold uppercase rounded">Before</span>
+</div>
+<div class="w-1/2 relative overflow-hidden">
+<img alt="Real new brake disc" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA78SxkIbe096uCY2bgH-fUakr-QB3xHuP2_THJzxytsZFN7EQZnj3eESeiw6RvidcuPPmCSSqS4-REB6-0T_U5ZB42qZNewoM2jTX0Gt__P7TTtKxYH0iwPtl1weIcxRUQrHAZEs6TlP0Zh_bFt8Yjuqq5x-0kGvt5UrjImPb-uZ9L305IpVSfZgZzIBqsYXGsEemCTLhHkhBwvkY70nG_ZQ4gTXQ97bsib17d3HAmT2VPKGUzeIL3BDRbmTFZBRG5HVWDF8R8WpQ"/>
+<span class="absolute top-4 right-4 bg-secondary-container text-on-secondary-fixed px-3 py-1 text-xs font-bold uppercase rounded">After</span>
+</div>
+</div>
+</div>
+<div class="space-y-6 reveal">
+<div class="glass-card p-6 rounded-xl border-l-4 border-secondary">
+<div class="flex gap-1 text-amber-500 mb-4">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-primary italic mb-4 font-body">"Had a major electrical fault on my Range Rover. No one else could find it. Manchester Mobile Mechanic arrived, diagnosed it in 20 minutes and fixed it on the spot. Absolute professional."</p>
+<div class="font-bold text-primary">— James R., Manchester</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Map Section -->
+<section class="h-[450px] bg-slate-900 relative">
+<iframe allowfullscreen="" height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d152064.04351368942!2d-2.36367355!3d53.472224!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487a4d4c5226f5db%3A0xd9be143804da6ba!2sManchester!5e0!3m2!1sen!2suk!4v1715600000000!5m2!1sen!2suk" style="border:0;" width="100%"></iframe>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="bg-primary text-white p-6 rounded-lg shadow-2xl pointer-events-auto max-w-sm text-center">
+<h4 class="font-headline font-bold text-xl mb-2">Serving All Greater Manchester</h4>
+<p class="text-on-primary-container text-sm">Trafford, Salford, Stockport, Oldham, and beyond. We are mobile and ready to deploy.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-white py-12 border-t border-surface-container-highest">
+<div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col items-center md:items-start gap-4">
+<img alt="Manchester Mobile Mechanic Logo" class="h-10 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0uinxyCymmhqwpf6jS-92j2U9niGMrWkzUQtPHpwhzPIJ5Z2UJNNzbo6nto0vDDjE6A8mFRCnMHMOrxxYS9NwVkRHAMra0Dzd9P-F0Hc_uJHLjPxJRaRFhG-G6RdbI4lZcRhfF1mZrDRoUUG23mvPbI-TdfrpdapQmtE8aVBjYKP1Lc70A2Vi6t3qhcj2ye3ah_s0HW4r34E30pEiX_tMgjkQ_s3XZBSPQHSNGNDpcJboDA8wvc616zwWX-Y6qLyTFh2fH7OXpeUig"/>
+<p class="text-on-surface-variant text-sm font-label uppercase tracking-widest">© 2024 MANCHESTER MOBILE MECHANIC</p>
+</div>
+<div class="flex gap-8 text-primary font-bold">
+<a class="hover:text-secondary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-secondary transition-colors" href="#">Terms of Service</a>
+</div>
+<div class="flex gap-4">
+<a class="p-2 bg-surface-container-high rounded-full hover:bg-secondary-container transition-all" href="https://wa.me/447845531351">
+<img alt="WhatsApp" class="w-6 h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvsLkd9ipm0VUnmbg_0qtP8gc8aX9IgPk1XxGaq6tbPKi-BIBpZpsBqVoh4qjONllwzWG3omYEoQeqvHYheinhMUwHgMieDXmXtNC76chkfp4_8xZHhnaJkNG4y7wcWAlOy7Kmi3Zj4OOBidIWKwmYWcvaf7EZEgtLxhAeDu0ylmfMZudVCMCoZD0GMydYxOm6x_5R6Khpn_X0NafHB3oaGCS351PZ129My3HhrMaa6FVkIV1aOs28uSK8MjDaNKeSyKUg3QZk3ec"/>
+</a>
+</div>
+</div>
+<div class="h-16 md:hidden"></div> <!-- Spacer for mobile bar -->
+</footer>
+<!-- Fixed Mobile Bottom Bar -->
+<div class="md:hidden fixed bottom-0 left-0 w-full z-50 bg-white/90 backdrop-blur-xl px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] flex items-center gap-3">
+<a class="flex-1 bg-secondary-container text-on-secondary-fixed h-14 rounded font-bold text-lg flex items-center justify-center gap-3 active:scale-95 transition-transform" href="tel:07845531351">
+<span class="material-symbols-outlined">call</span>
+            Call 0784 5531351
+        </a>
+</div>
+<!-- WhatsApp FAB -->
+<a class="fixed bottom-20 right-6 md:bottom-8 md:right-8 z-50 group" href="https://wa.me/447845531351">
+<div class="relative">
+<div class="absolute inset-0 bg-[#25D366] rounded-full animate-ping opacity-25"></div>
+<div class="relative bg-[#25D366] text-white p-4 rounded-full shadow-2xl flex items-center justify-center transform group-hover:scale-110 transition-all">
+<svg class="w-8 h-8 fill-current" viewbox="0 0 24 24">
+<path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217s.231.001.332.005c.109.004.258-.041.404.311.159.389.542 1.32.59 1.42.048.1.08.217.014.346-.066.13-.1.21-.2.325-.1.115-.21.257-.3.346-.1.1-.205.209-.089.407.116.198.515.849 1.104 1.373.758.677 1.397.887 1.597.986.198.099.313.082.43-.052.117-.135.5-.583.634-.783.135-.2.27-.167.455-.1.185.067 1.17.551 1.371.652.201.101.336.151.385.234.049.082.049.474-.095.879z"></path>
+</svg>
+</div>
+</div>
+</a>
+<script>
+        // HARDCODED Intersection Observer JS script
+        const observerOptions = {
+            root: null,
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Once animated, we don't need to observe it anymore
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Targeted elements for scroll animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const elementsToReveal = document.querySelectorAll('.reveal');
+            elementsToReveal.forEach(el => observer.observe(el));
+        });
+    </script>
+</body></html>
