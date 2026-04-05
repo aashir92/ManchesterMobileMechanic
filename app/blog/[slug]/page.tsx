@@ -63,25 +63,26 @@ export default async function BlogArticlePage({ params }: Props) {
         <div className="bg-white pb-16 pt-20">
           {/* Wide shell on PC + sidebar so space is used intentionally; text stays left-aligned with a wider measure than typography’s default 65ch. */}
           <div className="mx-auto w-full max-w-[1920px] px-5 sm:px-6 lg:px-8 xl:px-10 2xl:px-14">
+            {/* Toolbar full-width so the xl grid row aligns sidebar top with hero (not with this row). */}
+            <div className="flex items-center justify-between gap-4 pb-6">
+              <Link
+                href="/blog"
+                className="inline-flex h-9 shrink-0 items-center text-sm font-semibold text-[#083D6B] hover:underline"
+              >
+                ← Back to blogs
+              </Link>
+              {isAdmin ? (
+                <Link
+                  href={`/blog/${post.slug}/edit`}
+                  className="inline-flex h-9 shrink-0 items-center gap-2 rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-semibold leading-none text-[#083D6B] shadow-md backdrop-blur-md transition hover:bg-white/35"
+                >
+                  Edit article
+                </Link>
+              ) : null}
+            </div>
+
             <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_min(300px,26vw)] xl:gap-12 xl:items-start">
               <div className="min-w-0">
-                <div className="flex items-center justify-between gap-4 pb-6">
-                  <Link
-                    href="/blog"
-                    className="inline-flex h-9 shrink-0 items-center text-sm font-semibold text-[#083D6B] hover:underline"
-                  >
-                    ← Back to blogs
-                  </Link>
-                  {isAdmin ? (
-                    <Link
-                      href={`/blog/${post.slug}/edit`}
-                      className="inline-flex h-9 shrink-0 items-center gap-2 rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-semibold leading-none text-[#083D6B] shadow-md backdrop-blur-md transition hover:bg-white/35"
-                    >
-                      Edit article
-                    </Link>
-                  ) : null}
-                </div>
-
                 {post.featured_image_url ? (
                   <div className="pb-6 lg:pb-7">
                     {/* Width capped on ultrawide; height comes from a normal photo aspect (not a short letterbox). */}
@@ -105,18 +106,18 @@ export default async function BlogArticlePage({ params }: Props) {
                     <p className="text-sm font-medium uppercase tracking-wide text-[#42474f]">
                       {formatDate(post.created_at)}
                     </p>
-                    <h1 className="mt-2 max-w-[40ch] font-[family-name:var(--font-montserrat)] text-3xl font-bold text-[#083D6B] sm:max-w-none md:text-4xl xl:text-5xl xl:leading-tight">
+                    <h1 className="mt-2 max-w-[40ch] font-[family-name:var(--font-montserrat)] text-2xl font-bold leading-snug text-[#083D6B] sm:max-w-none sm:text-3xl md:text-[1.75rem] md:leading-tight">
                       {post.title}
                     </h1>
                     {post.excerpt ? (
-                      <p className="mt-4 text-lg text-[#42474f] xl:mt-5 xl:text-xl xl:leading-relaxed">
+                      <p className="mt-3 max-w-none text-base leading-relaxed text-[#42474f] md:mt-4 md:text-[1.05rem]">
                         {post.excerpt}
                       </p>
                     ) : null}
                   </header>
 
                   <div
-                    className="blog-article-prose prose prose-lg prose-headings:text-[#083D6B] prose-a:text-[#083D6B] prose-img:rounded-xl prose-p:text-pretty prose-p:leading-relaxed lg:prose-xl xl:prose-2xl"
+                    className="blog-article-prose prose prose-sm sm:prose-base prose-headings:text-[#083D6B] prose-a:text-[#083D6B] prose-img:rounded-xl prose-p:leading-relaxed prose-headings:font-semibold md:prose-base"
                     dangerouslySetInnerHTML={{ __html: bodyHtml }}
                   />
                 </article>
