@@ -12,6 +12,16 @@ export async function middleware(request: NextRequest) {
   const { supabaseResponse, user } = await updateSession(request);
   const path = request.nextUrl.pathname;
 
+  const isBlogEditorRoute =
+    path === "/blog/new" || /^\/blog\/[^/]+\/edit$/.test(path);
+
+  if (isBlogEditorRoute && !user) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/admin/login";
+    url.searchParams.set("next", path);
+    return NextResponse.redirect(url);
+  }
+
   if (path.startsWith("/admin") && !path.startsWith("/admin/login")) {
     if (!user) {
       const url = request.nextUrl.clone();

@@ -1,5 +1,17 @@
 import type { NextConfig } from "next";
 
+function supabaseStorageHostname(): string | undefined {
+  const raw = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!raw) return undefined;
+  try {
+    return new URL(raw).hostname;
+  } catch {
+    return undefined;
+  }
+}
+
+const supabaseHost = supabaseStorageHostname();
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -18,6 +30,15 @@ const nextConfig: NextConfig = {
         hostname: "plus.unsplash.com",
         pathname: "/**",
       },
+      ...(supabaseHost
+        ? [
+            {
+              protocol: "https" as const,
+              hostname: supabaseHost,
+              pathname: "/**" as const,
+            },
+          ]
+        : []),
     ],
   },
 };

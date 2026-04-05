@@ -1,6 +1,6 @@
 "use client";
 
-import { updateAboutBodyText, updateAboutTrustBlock } from "@/app/admin/actions";
+import { updateAboutStoryParagraph, updateAboutTrustBlock } from "@/app/admin/actions";
 import type { AboutBlockPublic } from "@/lib/cms/merge-site-content";
 import { splitAboutExperienceWhy } from "@/lib/cms/merge-site-content";
 import { motion } from "framer-motion";
@@ -125,15 +125,27 @@ export function AboutStorySections({
   const { experience, why } = splitAboutExperienceWhy(aboutText);
   const [expEdit, setExpEdit] = useState(experience);
   const [whyEdit, setWhyEdit] = useState(why);
-  const [saving, setSaving] = useState(false);
+  const [savingExperience, setSavingExperience] = useState(false);
+  const [savingWhy, setSavingWhy] = useState(false);
 
-  async function saveBody() {
-    setSaving(true);
-    const body = `${expEdit.trim()}\n\n${whyEdit.trim()}`;
+  async function saveExperience() {
+    setSavingExperience(true);
     const fd = new FormData();
-    fd.set("about_text", body);
-    const r = await updateAboutBodyText(fd);
-    setSaving(false);
+    fd.set("section", "experience");
+    fd.set("text", expEdit);
+    const r = await updateAboutStoryParagraph(fd);
+    setSavingExperience(false);
+    if ("error" in r && r.error) alert(r.error);
+    else router.refresh();
+  }
+
+  async function saveWhy() {
+    setSavingWhy(true);
+    const fd = new FormData();
+    fd.set("section", "why");
+    fd.set("text", whyEdit);
+    const r = await updateAboutStoryParagraph(fd);
+    setSavingWhy(false);
     if ("error" in r && r.error) alert(r.error);
     else router.refresh();
   }
@@ -176,6 +188,14 @@ export function AboutStorySections({
                   rows={5}
                   className="w-full rounded-lg border border-white/20 bg-black/25 px-3 py-2 text-base leading-relaxed text-white placeholder:text-white/40 md:text-lg"
                 />
+                <button
+                  type="button"
+                  disabled={savingExperience}
+                  onClick={() => void saveExperience()}
+                  className="mt-4 rounded-lg bg-[#E6B31E] px-4 py-2 text-sm font-bold text-[#251a00] disabled:opacity-50"
+                >
+                  {savingExperience ? "Saving…" : "Save your experience"}
+                </button>
               </div>
             ) : (
               <p className="text-lg leading-relaxed text-white/90 md:text-xl">{experience}</p>
@@ -209,11 +229,11 @@ export function AboutStorySections({
                 />
                 <button
                   type="button"
-                  disabled={saving}
-                  onClick={() => void saveBody()}
+                  disabled={savingWhy}
+                  onClick={() => void saveWhy()}
                   className="mt-4 rounded-lg bg-[#E6B31E] px-4 py-2 text-sm font-bold text-[#251a00] disabled:opacity-50"
                 >
-                  {saving ? "Saving…" : "Save both paragraphs"}
+                  {savingWhy ? "Saving…" : "Save why we started"}
                 </button>
               </div>
             ) : (

@@ -19,7 +19,7 @@ export function PublicShell({
       <Navbar isAdmin={isAdmin} contact={contact} />
       <SiteEditModeProvider isAdmin={isAdmin}>{children}</SiteEditModeProvider>
       <Footer contact={contact} />
-      <WhatsAppFab whatsappUrl={contact.whatsapp_url} />
+      {!isAdmin ? <WhatsAppFab whatsappUrl={contact.whatsapp_url} /> : null}
     </>
   );
 }

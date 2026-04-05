@@ -1,11 +1,12 @@
 "use server";
 
+import { excerptFromTipTapJson } from "@/lib/blog/excerpt-from-content";
 import { buildDefaultServicesPageContent } from "@/lib/cms/default-services-page";
 import {
   normalizeHeroCarouselJson,
   type HeroSlideRow,
 } from "@/lib/cms/hero-carousel";
-import { normalizeSiteRow } from "@/lib/cms/merge-site-content";
+import { normalizeSiteRow, splitAboutExperienceWhy } from "@/lib/cms/merge-site-content";
 import {
   homeValueFeaturesSchema,
   servicesPageContentSchema,
@@ -27,8 +28,22 @@ function validateImage(file: File | null): string | null {
 }
 
 function revalidateCmsPaths() {
-  const paths = ["/", "/about", "/contact", "/services", "/privacy", "/terms", "/admin"];
+  const paths = [
+    "/",
+    "/about",
+    "/contact",
+    "/services",
+    "/privacy",
+    "/terms",
+    "/admin",
+    "/blog",
+  ];
   for (const p of paths) revalidatePath(p);
+}
+
+function revalidateBlogPaths(slug?: string | null) {
+  revalidatePath("/blog");
+  if (slug?.trim()) revalidatePath(`/blog/${slug.trim()}`);
 }
 
 function storagePathFromPublicUrl(publicUrl: string): string | null {
@@ -383,6 +398,39 @@ export async function updateAboutBodyText(formData: FormData) {
   return { ok: true };
 }
 
+export async function updateAboutStoryParagraph(formData: FormData) {
+  const { supabase, user } = await requireUser();
+  if (!user) return { error: "Unauthorized" };
+
+  await ensureSiteRow(supabase);
+
+  const section = String(formData.get("section") ?? "").trim();
+  if (section !== "experience" && section !== "why") {
+    return { error: "Invalid section" };
+  }
+
+  const text = String(formData.get("text") ?? "").trim();
+
+  const { data: row, error: fetchErr } = await supabase
+    .from("site_content")
+    .select("about_text")
+    .eq("id", 1)
+    .maybeSingle();
+
+  if (fetchErr) return { error: fetchErr.message };
+
+  const { experience, why } = splitAboutExperienceWhy(row?.about_text ?? null);
+  const nextExperience = section === "experience" ? text : experience;
+  const nextWhy = section === "why" ? text : why;
+  const merged = `${nextExperience.trim()}\n\n${nextWhy.trim()}`;
+  const about_text = merged.trim() ? merged : null;
+
+  const { error } = await supabase.from("site_content").update({ about_text }).eq("id", 1);
+  if (error) return { error: error.message };
+  revalidateCmsPaths();
+  return { ok: true };
+}
+
 export async function updateContactPhones(formData: FormData) {
   const { supabase, user } = await requireUser();
   if (!user) return { error: "Unauthorized" };
@@ -610,5 +658,139 @@ export async function loadServicesPageContentForAdmin(): Promise<{
   const parsed = servicesPageContentSchema.safeParse(normalized.services_page_content);
   const data = parsed.success ? parsed.data : buildDefaultServicesPageContent();
   return { data };
+}
+
+function parseBlogContentJson(raw: string): { ok: true; value: object } | { error: string } {
+  const trimmed = raw.trim();
+  if (!trimmed) return { ok: true, value: { type: "doc", content: [] } };
+  try {
+    const v = JSON.parse(trimmed) as unknown;
+    if (v && typeof v === "object" && (v as { type?: string }).type === "doc") {
+      return { ok: true, value: v as object };
+    }
+    return { error: "Content must be a valid TipTap document" };
+  } catch {
+    return { error: "Invalid content JSON" };
+  }
+}
+
+export async function uploadBlogImage(formData: FormData) {
+  const { supabase, user } = await requireUser();
+  if (!user) return { error: "Unauthorized" };
+
+  const file = formData.get("file") as File | null;
+  const err = validateImage(file);
+  if (err) return { error: err };
+
+  const ext = file!.name.split(".").pop() || "jpg";
+  const path = `blog/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+
+  const { error: upErr } = await supabase.storage
+    .from(BUCKET)
+    .upload(path, file!, { contentType: file!.type });
+
+  if (upErr) return { error: upErr.message };
+
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from(BUCKET).getPublicUrl(path);
+
+  return { url: publicUrl };
+}
+
+export async function createBlog(formData: FormData) {
+  const { supabase, user } = await requireUser();
+  if (!user) return { error: "Unauthorized" };
+
+  const title = String(formData.get("title") ?? "").trim();
+  const slug = String(formData.get("slug") ?? "").trim();
+  const featured_image_url =
+    String(formData.get("featured_image_url") ?? "").trim() || null;
+  const published = formData.get("published") === "on" || formData.get("published") === "true";
+  const contentRaw = String(formData.get("content_json") ?? "");
+
+  if (!title) return { error: "Title is required" };
+  if (!slug) return { error: "Slug is required" };
+
+  const parsed = parseBlogContentJson(contentRaw);
+  if ("error" in parsed) return { error: parsed.error };
+
+  const excerpt = excerptFromTipTapJson(parsed.value);
+
+  const { error } = await supabase.from("blogs").insert({
+    title,
+    slug,
+    excerpt,
+    featured_image_url,
+    published,
+    content: parsed.value,
+  });
+
+  if (error) {
+    if (error.code === "23505") return { error: "That slug is already in use" };
+    return { error: error.message };
+  }
+
+  revalidateBlogPaths(slug);
+  return { ok: true as const, slug };
+}
+
+export async function updateBlog(formData: FormData) {
+  const { supabase, user } = await requireUser();
+  if (!user) return { error: "Unauthorized" };
+
+  const id = String(formData.get("id") ?? "").trim();
+  const title = String(formData.get("title") ?? "").trim();
+  const slug = String(formData.get("slug") ?? "").trim();
+  const featured_image_url =
+    String(formData.get("featured_image_url") ?? "").trim() || null;
+  const published = formData.get("published") === "on" || formData.get("published") === "true";
+  const contentRaw = String(formData.get("content_json") ?? "");
+  const previousSlug = String(formData.get("previous_slug") ?? "").trim();
+
+  if (!id) return { error: "Missing post id" };
+  if (!title) return { error: "Title is required" };
+  if (!slug) return { error: "Slug is required" };
+
+  const parsed = parseBlogContentJson(contentRaw);
+  if ("error" in parsed) return { error: parsed.error };
+
+  const excerpt = excerptFromTipTapJson(parsed.value);
+
+  const { error } = await supabase
+    .from("blogs")
+    .update({
+      title,
+      slug,
+      excerpt,
+      featured_image_url,
+      published,
+      content: parsed.value,
+    })
+    .eq("id", id);
+
+  if (error) {
+    if (error.code === "23505") return { error: "That slug is already in use" };
+    return { error: error.message };
+  }
+
+  revalidateBlogPaths(slug);
+  if (previousSlug && previousSlug !== slug) revalidateBlogPaths(previousSlug);
+  return { ok: true as const, slug };
+}
+
+export async function deleteBlog(formData: FormData) {
+  const { supabase, user } = await requireUser();
+  if (!user) return { error: "Unauthorized" };
+
+  const id = String(formData.get("id") ?? "").trim();
+  const slug = String(formData.get("slug") ?? "").trim();
+  if (!id) return { error: "Missing post id" };
+
+  const { error } = await supabase.from("blogs").delete().eq("id", id);
+  if (error) return { error: error.message };
+
+  revalidateBlogPaths(slug);
+  return { ok: true as const };
 }
 

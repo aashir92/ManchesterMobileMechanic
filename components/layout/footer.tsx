@@ -20,7 +20,7 @@ export function Footer({ contact }: { contact: ContactBlockPublic }) {
             onError={() => setLogoSrc(LOGO_FALLBACK)}
           />
           <p className="text-xs font-semibold uppercase tracking-widest text-[#42474f]">
-            © {new Date().getFullYear()} Manchester Mobile Mechanic
+            {new Date().getFullYear()} Manchester Mobile Mechanic
           </p>
         </div>
         <nav className="flex flex-wrap justify-center gap-6 text-sm font-bold text-[#083D6B]">
