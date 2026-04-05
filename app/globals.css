@@ -26,6 +26,12 @@ body {
   font-family: var(--font-open-sans), system-ui, sans-serif;
 }
 
+/* Typography plugin defaults prose to max-width: 65ch — too narrow on desktop. */
+.blog-article-prose {
+  max-width: none !important;
+  width: 100%;
+}
+
 .hero-fixed-bg {
   background-size: cover;
   background-position: center;

@@ -41,3 +41,22 @@ export async function getPostBySlug(slug: string): Promise<BlogPostRow | null> {
   if (error || !data) return null;
   return mapRow(data as Record<string, unknown>);
 }
+
+/** Other recent posts for “You may also like” (excludes current slug; RLS applies). */
+export async function getRelatedPosts(
+  currentSlug: string,
+  limit = 3,
+): Promise<BlogPostRow[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("blogs")
+    .select(
+      "id, title, slug, excerpt, content, featured_image_url, created_at, published",
+    )
+    .neq("slug", currentSlug)
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  if (error || !data) return [];
+  return data.map((row) => mapRow(row as Record<string, unknown>));
+}

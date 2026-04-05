@@ -24,13 +24,18 @@ export default async function BlogPage() {
 
   return (
     <PublicShell isAdmin={isAdmin} contact={publicContent.contact}>
-      <main className="relative min-h-screen pt-20 pb-24">
-        <div className="mx-auto max-w-7xl px-6">
-          <header className={`text-center ${isAdmin ? "mb-6" : "mb-12"}`}>
-            <h1 className="font-[family-name:var(--font-montserrat)] text-4xl font-bold text-[#083D6B] md:text-5xl">
+      <main className="relative min-h-screen bg-[#F4F5F7] pt-20 pb-24">
+        <div className="mx-auto max-w-[90rem] px-6 xl:px-10">
+          <header
+            className={`text-center ${isAdmin ? "mb-6" : "mb-12 md:mb-14 xl:mb-16"}`}
+          >
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#E6B31E]">
+              Insights & tips
+            </p>
+            <h1 className="mt-3 font-[family-name:var(--font-montserrat)] text-4xl font-bold text-[#083D6B] md:text-5xl">
               Blog
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-[#42474f]">
+            <p className="mx-auto mt-4 max-w-3xl text-[#42474f]">
               News, maintenance tips, and updates from Manchester Mobile Mechanic.
             </p>
           </header>
@@ -50,7 +55,7 @@ export default async function BlogPage() {
           {posts.length === 0 ? (
             <p className="text-center text-[#42474f]">No articles yet. Check back soon.</p>
           ) : (
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10">
               {posts.map((post) => (
                 <BlogPostCard key={post.id} post={post} isAdmin={isAdmin} />
               ))}

@@ -42,7 +42,7 @@ export function BlogPostCard({ post, isAdmin }: { post: BlogPostRow; isAdmin: bo
   }
 
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm transition-shadow hover:shadow-md">
+    <article className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm ring-1 ring-black/5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
       <Link href={`/blog/${post.slug}`} className="flex flex-1 flex-col">
         <div className="relative aspect-[16/10] bg-[#f4f5f7]">
           {post.featured_image_url ? (
