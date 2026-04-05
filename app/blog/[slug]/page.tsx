@@ -1,5 +1,6 @@
 import { BlogArticleAside } from "@/components/blog/blog-article-aside";
 import { BlogCtaStrip } from "@/components/blog/blog-cta-strip";
+import { BlogHeroMotion, FadeIn, Reveal } from "@/components/blog/blog-motion";
 import { BlogRelatedSection } from "@/components/blog/blog-related-section";
 import { PublicShell } from "@/components/layout/public-shell";
 import { getPublicAuth } from "@/lib/auth/public-session";
@@ -64,28 +65,29 @@ export default async function BlogArticlePage({ params }: Props) {
           {/* Wide shell on PC + sidebar so space is used intentionally; text stays left-aligned with a wider measure than typography’s default 65ch. */}
           <div className="mx-auto w-full max-w-[1920px] px-5 sm:px-6 lg:px-8 xl:px-10 2xl:px-14">
             {/* Toolbar full-width so the xl grid row aligns sidebar top with hero (not with this row). */}
-            <div className="flex items-center justify-between gap-4 pb-6">
-              <Link
-                href="/blog"
-                className="inline-flex h-9 shrink-0 items-center text-sm font-semibold text-[#083D6B] hover:underline"
-              >
-                ← Back to blogs
-              </Link>
-              {isAdmin ? (
+            <FadeIn>
+              <div className="flex items-center justify-between gap-4 pb-6">
                 <Link
-                  href={`/blog/${post.slug}/edit`}
-                  className="inline-flex h-9 shrink-0 items-center gap-2 rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-semibold leading-none text-[#083D6B] shadow-md backdrop-blur-md transition hover:bg-white/35"
+                  href="/blog"
+                  className="inline-flex h-9 shrink-0 items-center text-sm font-semibold text-[#083D6B] hover:underline"
                 >
-                  Edit article
+                  ← Back to blogs
                 </Link>
-              ) : null}
-            </div>
+                {isAdmin ? (
+                  <Link
+                    href={`/blog/${post.slug}/edit`}
+                    className="inline-flex h-9 shrink-0 items-center gap-2 rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-semibold leading-none text-[#083D6B] shadow-md backdrop-blur-md transition hover:bg-white/35"
+                  >
+                    Edit article
+                  </Link>
+                ) : null}
+              </div>
+            </FadeIn>
 
             <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_min(300px,26vw)] xl:gap-12 xl:items-start">
               <div className="min-w-0">
                 {post.featured_image_url ? (
-                  <div className="pb-6 lg:pb-7">
-                    {/* Width capped on ultrawide; height comes from a normal photo aspect (not a short letterbox). */}
+                  <BlogHeroMotion className="pb-6 lg:pb-7">
                     <div className="w-full max-w-5xl 2xl:max-w-6xl">
                       <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-black/10 shadow-sm sm:aspect-[3/2] xl:rounded-3xl">
                         <Image
@@ -98,37 +100,43 @@ export default async function BlogArticlePage({ params }: Props) {
                         />
                       </div>
                     </div>
-                  </div>
+                  </BlogHeroMotion>
                 ) : null}
 
-                <article className="w-full max-w-[min(96ch,100%)] text-left">
-                  <header className="mb-6 lg:mb-8">
-                    <p className="text-sm font-medium uppercase tracking-wide text-[#42474f]">
-                      {formatDate(post.created_at)}
-                    </p>
-                    <h1 className="mt-2 max-w-[40ch] font-[family-name:var(--font-montserrat)] text-2xl font-bold leading-snug text-[#083D6B] sm:max-w-none sm:text-3xl md:text-[1.75rem] md:leading-tight">
-                      {post.title}
-                    </h1>
-                    {post.excerpt ? (
-                      <p className="mt-3 max-w-none text-base leading-relaxed text-[#42474f] md:mt-4 md:text-[1.05rem]">
-                        {post.excerpt}
+                <FadeIn delay={post.featured_image_url ? 0.1 : 0.04}>
+                  <article className="w-full max-w-[min(96ch,100%)] text-left">
+                    <header className="mb-6 lg:mb-8">
+                      <p className="text-sm font-medium uppercase tracking-wide text-[#42474f]">
+                        {formatDate(post.created_at)}
                       </p>
-                    ) : null}
-                  </header>
+                      <h1 className="mt-2 max-w-[40ch] font-[family-name:var(--font-montserrat)] text-2xl font-bold leading-snug text-[#083D6B] sm:max-w-none sm:text-3xl md:text-[1.75rem] md:leading-tight">
+                        {post.title}
+                      </h1>
+                      {post.excerpt ? (
+                        <p className="mt-3 max-w-none text-base leading-relaxed text-[#42474f] md:mt-4 md:text-[1.05rem]">
+                          {post.excerpt}
+                        </p>
+                      ) : null}
+                    </header>
 
-                  <div
-                    className="blog-article-prose prose prose-sm sm:prose-base prose-headings:text-[#083D6B] prose-a:text-[#083D6B] prose-img:rounded-xl prose-p:leading-relaxed prose-headings:font-semibold md:prose-base"
-                    dangerouslySetInnerHTML={{ __html: bodyHtml }}
-                  />
-                </article>
+                    <div
+                      className="blog-article-prose prose prose-sm sm:prose-base prose-headings:text-[#083D6B] prose-a:text-[#083D6B] prose-img:rounded-xl prose-p:leading-relaxed prose-headings:font-semibold md:prose-base"
+                      dangerouslySetInnerHTML={{ __html: bodyHtml }}
+                    />
+                  </article>
+                </FadeIn>
               </div>
 
               <BlogArticleAside />
             </div>
           </div>
         </div>
-        <BlogRelatedSection posts={relatedPosts} />
-        <BlogCtaStrip />
+        <Reveal>
+          <BlogRelatedSection posts={relatedPosts} />
+        </Reveal>
+        <Reveal delay={0.08}>
+          <BlogCtaStrip />
+        </Reveal>
       </main>
     </PublicShell>
   );
