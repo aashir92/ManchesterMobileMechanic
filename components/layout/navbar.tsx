@@ -72,8 +72,8 @@ export function Navbar({
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+      <nav className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-3 px-6 py-2 md:gap-4 md:py-0">
+        <Link href="/" className="flex min-w-0 shrink-0 items-center gap-3" onClick={() => setOpen(false)}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={logoSrc}
@@ -90,50 +90,62 @@ export function Navbar({
           </span>
         </Link>
 
-        <div className="hidden items-center gap-6 md:flex">
-          {links.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className={desktopNavLinkClass(href, pathname, solid)}
-            >
-              {label}
-            </Link>
-          ))}
-          <a
-            className={
-              solid
-                ? "flex items-center gap-2 rounded-lg bg-[#E6B31E] px-5 py-2 normal-case tracking-normal text-[#251a00] transition-opacity hover:opacity-90"
-                : "flex items-center gap-2 rounded border border-white/80 px-5 py-2 normal-case tracking-normal text-white transition-colors hover:bg-white/10"
-            }
-            href={`tel:${telHref}`}
-          >
-            <Phone className="h-4 w-4" aria-hidden />
-            {callLabel}
-          </a>
-          {isAdmin ? (
-            <span className="flex flex-wrap items-center gap-2 normal-case">
-              <span className="rounded bg-[#E6B31E]/20 px-2 py-1 text-xs font-bold text-[#083D6B]">
-                Editing
-              </span>
+        <div className="hidden min-w-0 flex-1 items-center justify-end gap-3 md:flex md:flex-nowrap lg:gap-5">
+          <div className="flex min-w-0 flex-nowrap items-center gap-3 lg:gap-5">
+            {links.map(({ href, label }) => (
               <Link
-                href="/admin/settings"
-                className={`rounded-lg px-3 py-1.5 text-xs font-semibold underline decoration-[#E6B31E] decoration-2 underline-offset-4 transition-colors hover:text-[#E6B31E] ${
-                  solid ? "text-[#083D6B]" : "text-white/95 hover:text-[#E6B31E]"
-                }`}
+                key={href}
+                href={href}
+                className={`shrink-0 ${desktopNavLinkClass(href, pathname, solid)}`}
               >
-                Change password
+                {label}
               </Link>
-              <form action={signOut}>
-                <button
-                  type="submit"
-                  className="cursor-pointer rounded-lg border border-[#083D6B]/30 bg-white px-3 py-1.5 text-xs font-semibold text-[#083D6B] transition-colors hover:bg-[#F4F5F7]"
-                >
-                  Sign out
-                </button>
-              </form>
-            </span>
-          ) : null}
+            ))}
+          </div>
+          <div className="flex shrink-0 flex-nowrap items-center gap-2 lg:gap-3">
+            <a
+              className={
+                solid
+                  ? "inline-flex h-9 items-center gap-1.5 whitespace-nowrap rounded-full bg-[#E6B31E] px-3.5 text-sm font-semibold normal-case tracking-normal text-[#251a00] transition-opacity hover:opacity-90"
+                  : "inline-flex h-9 items-center gap-1.5 whitespace-nowrap rounded-full border border-white/80 px-3.5 text-sm font-semibold normal-case tracking-normal text-white transition-colors hover:bg-white/10"
+              }
+              href={`tel:${telHref}`}
+            >
+              <Phone className="h-4 w-4 shrink-0" aria-hidden />
+              {callLabel}
+            </a>
+            {isAdmin ? (
+              <>
+                <span
+                  className="hidden h-6 w-px shrink-0 bg-[#083D6B]/20 xl:block"
+                  aria-hidden
+                />
+                <span className="flex flex-nowrap items-center gap-2 normal-case">
+                  <span className="shrink-0 rounded-full bg-[#E6B31E]/25 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#083D6B]">
+                    Editing
+                  </span>
+                  <Link
+                    href="/admin/settings"
+                    title="Change password"
+                    className={`shrink-0 whitespace-nowrap text-xs font-semibold underline decoration-[#E6B31E] decoration-2 underline-offset-4 transition-colors hover:text-[#E6B31E] ${
+                      solid ? "text-[#083D6B]" : "text-white/95 hover:text-[#E6B31E]"
+                    }`}
+                  >
+                    <span className="2xl:inline">Change password</span>
+                    <span className="2xl:hidden">Password</span>
+                  </Link>
+                  <form action={signOut} className="inline shrink-0">
+                    <button
+                      type="submit"
+                      className="cursor-pointer whitespace-nowrap rounded-full border border-[#083D6B]/25 bg-white px-3 py-1.5 text-xs font-semibold text-[#083D6B] transition-colors hover:bg-[#F4F5F7]"
+                    >
+                      Sign out
+                    </button>
+                  </form>
+                </span>
+              </>
+            ) : null}
+          </div>
         </div>
 
         <button
