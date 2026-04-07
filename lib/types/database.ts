@@ -23,6 +23,7 @@ export type SiteContent = {
   contact_phone_display: string | null;
   contact_phone_tel: string | null;
   contact_whatsapp_url: string | null;
+  contact_booking_email: string | null;
   contact_email_note: string | null;
   about_page_eyebrow: string | null;
   about_experience_title: string | null;

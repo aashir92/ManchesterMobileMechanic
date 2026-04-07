@@ -26,6 +26,7 @@ const DEFAULT_CONTACT = {
   phone_display: "0784 5531351",
   phone_tel: "07845531351",
   whatsapp_url: "https://wa.me/447845531351",
+  booking_email: "",
   email_note:
     "Prefer email? Submit the booking form. We will reply by email or phone as soon as we can.",
 } as const;
@@ -147,6 +148,7 @@ export function normalizeSiteRow(
     contact_phone_display: asString(r.contact_phone_display),
     contact_phone_tel: asString(r.contact_phone_tel),
     contact_whatsapp_url: asString(r.contact_whatsapp_url),
+    contact_booking_email: asString(r.contact_booking_email),
     contact_email_note: asString(r.contact_email_note),
     about_page_eyebrow: asString(r.about_page_eyebrow),
     about_experience_title: asString(r.about_experience_title),
@@ -173,6 +175,7 @@ export type ContactBlockPublic = {
   phone_display: string;
   phone_tel: string;
   whatsapp_url: string;
+  booking_email: string;
   email_note: string;
 };
 
@@ -251,6 +254,7 @@ export function mergeToPublicSiteContent(
       phone_display: row.contact_phone_display ?? DEFAULT_CONTACT.phone_display,
       phone_tel: phone_tel,
       whatsapp_url: row.contact_whatsapp_url ?? DEFAULT_CONTACT.whatsapp_url,
+      booking_email: row.contact_booking_email ?? DEFAULT_CONTACT.booking_email,
       email_note: row.contact_email_note ?? DEFAULT_CONTACT.email_note,
     },
     home_value: {

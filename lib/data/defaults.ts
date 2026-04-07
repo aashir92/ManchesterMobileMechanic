@@ -232,6 +232,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
   contact_phone_display: null,
   contact_phone_tel: null,
   contact_whatsapp_url: null,
+  contact_booking_email: null,
   contact_email_note: null,
   about_page_eyebrow: null,
   about_experience_title: null,

@@ -345,6 +345,8 @@ export async function updateContactContent(formData: FormData) {
     contact_phone_tel: String(formData.get("contact_phone_tel") ?? "").trim() || null,
     contact_whatsapp_url:
       String(formData.get("contact_whatsapp_url") ?? "").trim() || null,
+    contact_booking_email:
+      String(formData.get("contact_booking_email") ?? "").trim() || null,
     contact_email_note: String(formData.get("contact_email_note") ?? "").trim() || null,
   };
 
@@ -443,6 +445,8 @@ export async function updateContactPhones(formData: FormData) {
     contact_phone_tel: String(formData.get("contact_phone_tel") ?? "").trim() || null,
     contact_whatsapp_url:
       String(formData.get("contact_whatsapp_url") ?? "").trim() || null,
+    contact_booking_email:
+      String(formData.get("contact_booking_email") ?? "").trim() || null,
   };
 
   const { error } = await supabase.from("site_content").update(patch).eq("id", 1);

@@ -23,20 +23,20 @@ export function ContactSection({
   const [disp, setDisp] = useState(contact.phone_display);
   const [tel, setTel] = useState(contact.phone_tel);
   const [wa, setWa] = useState(contact.whatsapp_url);
+  const [bookingEmail, setBookingEmail] = useState(contact.booking_email);
   const [savingPhones, setSavingPhones] = useState(false);
   const [bookingSending, setBookingSending] = useState(false);
   const [bookingStatus, setBookingStatus] = useState<"idle" | "ok" | "err">("idle");
   const [bookingErr, setBookingErr] = useState<string | null>(null);
 
   const telHref = contact.phone_tel.replace(/\s/g, "");
-  const formspreeId = (process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID ?? "").trim();
-
   async function savePhones() {
     setSavingPhones(true);
     const fd = new FormData();
     fd.set("contact_phone_display", disp);
     fd.set("contact_phone_tel", tel);
     fd.set("contact_whatsapp_url", wa);
+    fd.set("contact_booking_email", bookingEmail);
     const r = await updateContactPhones(fd);
     setSavingPhones(false);
     if ("error" in r && r.error) alert(r.error);
@@ -59,32 +59,25 @@ export function ContactSection({
       return;
     }
 
-    if (!formspreeId) {
+    if (!bookingEmail.trim()) {
       setBookingErr(
-        "The booking form is not set up yet. Please call us or use WhatsApp and we will help you from there.",
+        "Booking is temporarily unavailable online. Please call or WhatsApp and we will help right away.",
       );
       setBookingStatus("err");
       return;
     }
 
-    const subject = "Service booking request (Manchester Mobile Mechanic)";
     setBookingSending(true);
     try {
-      const payload: Record<string, string> = {
+      const payload = {
         name: n,
         phone: p,
+        email: em || undefined,
         message: m,
-        _subject: subject,
       };
-      if (em) {
-        payload.email = em;
-        payload._replyto = em;
-      }
-
-      const res = await fetch(`https://formspree.io/f/${formspreeId}`, {
+      const res = await fetch("/api/booking-request", {
         method: "POST",
         headers: {
-          Accept: "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
@@ -92,14 +85,10 @@ export function ContactSection({
 
       const data = (await res.json().catch(() => ({}))) as {
         error?: string;
-        errors?: Array<{ message?: string }>;
       };
 
       if (!res.ok) {
-        const msg =
-          data.error ||
-          data.errors?.map((x) => x.message).filter(Boolean).join("; ") ||
-          "Something went wrong. Please try again or call us.";
+        const msg = data.error || "Something went wrong. Please try again or call us.";
         setBookingErr(msg);
         setBookingStatus("err");
         return;
@@ -175,6 +164,16 @@ export function ContactSection({
                       className="mt-1 w-full rounded-lg border border-white/25 bg-white/95 px-3 py-2 font-mono text-xs text-[#191c1d]"
                     />
                   </label>
+                  <label className="block text-white/85">
+                    Booking recipient email
+                    <input
+                      type="email"
+                      value={bookingEmail}
+                      onChange={(e) => setBookingEmail(e.target.value)}
+                      placeholder="bookings@yourdomain.com"
+                      className="mt-1 w-full rounded-lg border border-white/25 bg-white/95 px-3 py-2 text-[#191c1d]"
+                    />
+                  </label>
                   <button
                     type="button"
                     disabled={savingPhones}
@@ -217,15 +216,14 @@ export function ContactSection({
               <Calendar className="h-5 w-5" aria-hidden />
               <span className="text-sm font-bold uppercase tracking-wide">Booking form</span>
             </div>
-            {!formspreeId ? (
+            {!bookingEmail.trim() ? (
               <p
                 className="mb-4 rounded-lg border border-amber-400/40 bg-amber-500/15 px-4 py-3 text-sm text-amber-50"
                 role="status"
               >
-                Add{" "}
-                <code className="rounded bg-black/20 px-1.5 py-0.5 text-xs">NEXT_PUBLIC_FORMSPREE_FORM_ID</code>{" "}
-                in your site environment so this form can send requests. Until then, use{" "}
-                <strong>Call</strong> or <strong>WhatsApp</strong> on the left.
+                {isAdmin
+                  ? "Set the booking recipient email above to activate this form. Until then, customers should call or use WhatsApp."
+                  : "Online booking is temporarily unavailable. Please call or use WhatsApp and we will help immediately."}
               </p>
             ) : null}
             <label className="mb-2 block text-sm font-medium text-white/90" htmlFor="contact-name">
@@ -295,7 +293,8 @@ export function ContactSection({
                 className="mb-4 rounded-lg border border-emerald-400/40 bg-emerald-500/15 px-4 py-3 text-sm text-emerald-100"
                 role="status"
               >
-                Thank you. Your booking request was sent. We will get back to you shortly.
+                Thank you. Your booking request has been received and sent to our team. We will get back
+                to you shortly.
               </p>
             ) : null}
             {bookingStatus === "err" && bookingErr ? (
@@ -305,7 +304,7 @@ export function ContactSection({
             ) : null}
             <button
               type="submit"
-              disabled={bookingSending || !formspreeId}
+              disabled={bookingSending || !bookingEmail.trim()}
               className="w-full rounded-lg bg-[#E6B31E] py-4 text-lg font-bold text-[#251a00] shadow-lg transition-transform hover:brightness-110 active:scale-[0.99] disabled:opacity-60"
             >
               {bookingSending ? "Sending…" : "Send booking request"}

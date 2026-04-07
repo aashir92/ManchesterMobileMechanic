@@ -16,7 +16,7 @@ export default async function ContactPage() {
     <PublicShell isAdmin={isAdmin} contact={publicContent.contact}>
       <main className="relative pt-16">
         <ContactSection
-          key={`${publicContent.contact.phone_display}|${publicContent.contact.phone_tel}|${publicContent.contact.whatsapp_url}|${process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID ?? ""}`}
+          key={`${publicContent.contact.phone_display}|${publicContent.contact.phone_tel}|${publicContent.contact.whatsapp_url}|${publicContent.contact.booking_email}`}
           contact={publicContent.contact}
           isAdmin={isAdmin}
         />
